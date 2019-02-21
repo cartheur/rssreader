@@ -1,4 +1,16 @@
-// Designed and constructed by Christopher A Tucker, February 2007.
+// ***********************************************************************
+// Assembly         : RSSReader
+// Author           : cartheur
+// Created          : 18-02-2007
+//
+// Last Modified By : cartheur
+// Last Modified On : 02-21-2019
+// ***********************************************************************
+// <copyright file="MainForm.cs" company="cartheur">
+//   2007 - 2019. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Windows.Forms;
 using RSSReader.Forms;
@@ -7,20 +19,21 @@ namespace RSSReader
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Creates a new instance of the MainForm class.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
         }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             folderTableAdapter.Fill(rssDataSet.Folder);
             RefreshChannels();
             RefreshNewsItems();
         }
-        
         /// <summary>
-        /// Display the FolderDialog form.  By setting the FolderID property to 0, we're telling the dialog to essentially go into "new folder" mode.  If we were to set the FolderID > 0 then we'd be telling the dialog to go into "folder edit" mode.
+        /// Display the theme dialog. With an ID property of 0, the dialog goes into "new theme" mode. Setting the ID > 0 the dialog goes into "theme edit" mode.
         /// </summary>
         public void AddTheme()
         {
@@ -45,13 +58,13 @@ namespace RSSReader
                     }
                     else
                     {
-                        statusLabel.Text = "Problem creating new folder.  Could not save into database.";
+                        statusLabel.Text = "Problem creating new theme. Could not save into database.";
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Problem creating new folder: " + ex.Message);
+                    MessageBox.Show("Problem creating new theme: " + ex.Message);
                 }
 
             }
@@ -63,6 +76,9 @@ namespace RSSReader
             myThemeDialog = null;
 
         }
+        /// <summary>
+        /// Edit the chosen theme.
+        /// </summary>
         public void EditTheme()
         {
             statusLabel.Text = "Editing theme...";
@@ -103,6 +119,9 @@ namespace RSSReader
             }
             myThemeDialog = null;
         }
+        /// <summary>
+        /// Delete the chosen theme.
+        /// </summary>
         public void DeleteTheme()
         {
             statusLabel.Text = "Deleting theme...";
@@ -142,6 +161,9 @@ namespace RSSReader
                 statusLabel.Text = "Delete theme operation cancelled.";
             }
         }
+        /// <summary>
+        /// Add a new channel.
+        /// </summary>
         public void AddChannel()
         {
             statusLabel.Text = "Creating new channel...";
@@ -177,6 +199,9 @@ namespace RSSReader
             }
             myChannelDialog = null;
         }
+        /// <summary>
+        /// Edit a chosen channel.
+        /// </summary>
         public void EditChannel()
         {
             statusLabel.Text = "Editing channel...";
@@ -212,6 +237,9 @@ namespace RSSReader
             }
             myChannelDialog = null;
         }
+        /// <summary>
+        /// Delete a chosen channel.
+        /// </summary>
         public void DeleteChannel()
         {
             statusLabel.Text = "Deleting channel...";
@@ -261,7 +289,7 @@ namespace RSSReader
         /// <param name="folderID"></param>
         public void DeleteChannels(int folderID)
         {
-            int rowsAffected = channelTableAdapter.Update(rssDataSet);
+            int rowsAffected = channelTableAdapter.Update(rssDataSet)
             try
             {
                 rssDataSet.ChannelRow[] channels = (rssDataSet.ChannelRow[])rssDataSet.Channel.Select("FolderID = " + folderID.ToString());
@@ -373,6 +401,9 @@ namespace RSSReader
                 progressBar.Value = 0;
             }
         }
+        /// <summary>
+        /// Refresh all the channels.
+        /// </summary>
         public void RefreshChannels()
         {
             if (rssDataSet.Channel.Rows.Count == 0)
@@ -460,12 +491,7 @@ namespace RSSReader
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-        }
-        /// <summary>
-        /// When a Folder is selected, we'll want to display the Channels associated with the Folder. Additionally, we'll want to display the NewsItems for the default selected Channel.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        }>
         private void folderComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshChannels();
@@ -475,11 +501,6 @@ namespace RSSReader
         {
             RefreshNewsItems();
         }
-        /// <summary>
-        /// The "details area" (on the right-hand side of the form is bound to the NewsItemDataConnector, so when we want to display the details of the currently selected NewsItem we must set the Position property of the DataConnector.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void newsItemsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (newsItemsListBox.SelectedIndex != -1)
