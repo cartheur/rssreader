@@ -4,7 +4,7 @@
 // Created          : 18-02-2007
 //
 // Last Modified By : cartheur
-// Last Modified On : 21-02-2019
+// Last Modified On : 02-21-2019
 // ***********************************************************************
 // <copyright file="MainForm.cs" company="cartheur">
 //   2007 - 2019. All rights reserved.
@@ -289,7 +289,7 @@ namespace RSSReader
         /// <param name="folderID"></param>
         public void DeleteChannels(int folderID)
         {
-            int rowsAffected = channelTableAdapter.Update(rssDataSet)
+            int rowsAffected = channelTableAdapter.Update(rssDataSet);
             try
             {
                 rssDataSet.ChannelRow[] channels = (rssDataSet.ChannelRow[])rssDataSet.Channel.Select("FolderID = " + folderID.ToString());
@@ -491,7 +491,7 @@ namespace RSSReader
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-        }>
+        }
         private void folderComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshChannels();
