@@ -519,7 +519,7 @@ namespace RSSReader
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(516, 428);
             this.Name = "MainForm";
-            this.Text = "Financial Advantage Aggregator";
+            this.Text = "Intelligent Data Aggregator";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
