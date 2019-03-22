@@ -66,6 +66,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
@@ -86,6 +87,7 @@
     <Compile Include="Forms\ThemeDialog.Designer.cs">
       <DependentUpon>ThemeDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +171,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\logs\logfile.txt" />
     <Content Include="rss.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -14,6 +14,7 @@
 using System;
 using System.Windows.Forms;
 using RSSReader.Forms;
+using System.Data.SqlClient;
 
 namespace RSSReader
 {
@@ -51,20 +52,23 @@ namespace RSSReader
                     theme.FolderName = myThemeDialog.FolderName;
                     int rowsAffected = folderTableAdapter.Update(theme);
                     rssDataSet.Folder.AddFolderRow(theme);
-
-                    if (rowsAffected > 0)
-                    {
-                        statusLabel.Text = "New theme created - '" + myThemeDialog.FolderName + "'";
-                    }
-                    else
-                    {
-                        statusLabel.Text = "Problem creating new theme. Could not save into database.";
-                    }
-
+                    SqlConnection cn = new SqlConnection();
+                    SqlDataAdapter da;
+                    SqlCommandBuilder cmdBuilder;
+                    cn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["RSSReader.Properties.Settings.rssConnectionString"].ConnectionString;
+                    cn.Open();
+                    da = new SqlDataAdapter("select * from Folder order by FolderId", cn);
+                    cmdBuilder = new SqlCommandBuilder(da);
+                    var submit = cmdBuilder.GetUpdateCommand().CommandText;
+                    da.Update(rssDataSet, "Folder");
+                    statusLabel.Text = "New theme created - '" + myThemeDialog.FolderName + "'";
+                    Logging.WriteLog("New theme created - '" + myThemeDialog.FolderName + "'", Logging.LogType.Information, Logging.LogCaller.MainForm);
                 }
                 catch (Exception ex)
                 {
+                    statusLabel.Text = "Problem creating new theme. Could not save into database.";
                     MessageBox.Show("Problem creating new theme: " + ex.Message);
+                    Logging.WriteLog(ex.Message, Logging.LogType.Error, Logging.LogCaller.MainForm);
                 }
 
             }
